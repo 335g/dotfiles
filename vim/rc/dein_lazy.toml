@@ -15,6 +15,7 @@ hook_source = '''
 repo = 'racer-rust/vim-racer'
 on_ft = 'rust'
 hook_source = '''
+  let g:racer_cmd = expand('/usr/local/bin/racer')
   let $RUST_SRC_PATH = expand('/usr/local/src/rustc-1.10.0/src')
   let g:racer_experimental_completer = 1
 '''
