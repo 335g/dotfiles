@@ -13,7 +13,7 @@ let s:dein_toml      = s:rc_dir . '/dein.toml'
 let s:dein_lazy_toml = s:rc_dir . '/dein_lazy.toml'
 
 " }}}
-" dein {{{1
+" `dein` {{{1
 
 if !isdirectory(expand($CACHE))
   call mkdir(expand($CACHE), 'p')
@@ -128,18 +128,15 @@ nnoremap <S-T> :GhcModTypeClear<CR>
 nnoremap <Space>b :!stack build<CR>
 
 " }}}
-" Programming {{{ 1
-
-" Rustlang {{{
+" Programming {{{1
+" Rustlang {{{2
 
 let g:rustfmt_autosave = 1
 let g:rustfmt_command = '$HOME/.cargo/bin/rustfmt'
 
 "}}}
-
-" Swift {{{
+" Swift {{{2
 "}}}
-
 "}}}
 " Misc {{{
 " vim:fdm=marker expandtab fdc=3 ft=vim ts=2 sw=2 sts=2
