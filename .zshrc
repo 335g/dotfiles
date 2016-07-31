@@ -85,7 +85,7 @@ function get-branch-status {
 # alias
 ####################################################
 
-alias vi=nvim
+alias vi=vim
 alias vim=/usr/local/bin/vim
 alias la='ls -a'
 alias lf='ls -f'

@@ -3,11 +3,6 @@ if &compatible
   set nocompatible
 endif
 
-augroup MyAutoCmd
-  autocmd!
-augroup END
-
-
 " Const {{{1
 
 let $CACHE           = expand('$HOME/.cache')
