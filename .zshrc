@@ -94,4 +94,4 @@ alias lal='ls -al'
 alias mv='nocorrect mv'
 alias cp='nocorrect cp'
 alias mkdir='nocorrect mkdir'
-alias where='command -v'A
+alias where='command -v'

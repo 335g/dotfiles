@@ -3,6 +3,8 @@ if &compatible
   set nocompatible
 endif
 
+
+
 " Const {{{1
 
 let $CACHE           = expand('$HOME/.cache')
@@ -11,6 +13,7 @@ let s:dein_path      = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 let s:rc_dir         = expand('~/dotfiles/vim/rc')
 let s:dein_toml      = s:rc_dir . '/dein.toml'
 let s:dein_lazy_toml = s:rc_dir . '/dein_lazy.toml'
+let s:dein_neo_toml  = s:rc_dir . '/dein_neo.toml'
 
 " }}}
 " `dein` {{{1
@@ -29,6 +32,13 @@ if dein#load_state(s:dein_dir)
 
   call dein#load_toml(s:dein_toml, {'lazy': 0})
   call dein#load_toml(s:dein_lazy_toml, {'lazy': 1})
+  if has('nvim')
+    call dein#load_toml(s:dein_neo_toml, {})
+  endif
+
+  if dein#tap('deoplete.nvim') && has('nvim')
+    call dein#disable('neocomplete.vim')
+  endif
 
   call dein#end()
   call dein#save_state()
