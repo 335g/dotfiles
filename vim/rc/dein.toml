@@ -39,3 +39,6 @@ on_source = 'unite.vim'
 repo = 'vim-jp/vimdoc-ja'
 on_ft = 'help'
 
+[[plugins]]
+repo = 'simeji/winresizer'
+

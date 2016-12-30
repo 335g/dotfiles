@@ -29,6 +29,10 @@ repo = 'rhysd/rust-doc.vim'
 on_ft = 'rust'
 
 [[plugins]]
+repo = 'toyamarinyon/vim-swift'
+on_ft = 'swift'
+
+[[plugins]]
 repo = 'thinca/vim-quickrun'
 on_map = {n = '<Plug>'}
 hook_add = 'nmap <silent> <Leader>r <Plug>(quickrun)'
