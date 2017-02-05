@@ -29,6 +29,10 @@ repo = 'rhysd/rust-doc.vim'
 on_ft = 'rust'
 
 [[plugins]]
+repo = 'racer-rust/vim-racer'
+on_ft = 'rust'
+
+[[plugins]]
 repo = 'toyamarinyon/vim-swift'
 on_ft = 'swift'
 
@@ -59,5 +63,30 @@ on_map = {n = '<Plug>'}
 on_if = "isdirectory(bufname('%'))"
 hook_add = 'nnoremap <silent> [Space]v :<C-u>VimFilter -invisible<CR>'
 hook_source = 'source ~/.vim/rc/plugins/vimfiler.rc.vim'
+
+[[plugins]]
+repo = 'kana/vim-filetype-haskell'
+on_ft = 'haskell'
+
+[[plugins]]
+repo = 'itchyny/vim-haskell-indent'
+on_ft = 'haskell'
+
+[[plugins]]
+repo = 'cespare/vim-toml'
+on_ft = 'toml'
+
+[[plugins]]
+repo = 'elzr/vim-json'
+on_ft = 'json'
+
+[[plugins]]
+repo = 'rcmdnk/vim-markdown'
+on_ft = ['markdown', 'mkd', 'md']
+
+[[plugins]]
+repo = 'vim-jp/vimdoc-ja'
+on_ft = 'help'
+
 
 
