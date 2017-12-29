@@ -39,3 +39,8 @@ nnoremap <S-T> :GhcModTypeClear<CR>
 
 " Space + b で stack build 実行
 nnoremap <Space>b :!stack build<CR>
+
+if has('nvim')
+  " terminal mode → command mode
+  tnoremap <silent> <ESC> <C-\><C-n>
+endif

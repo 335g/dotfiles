@@ -3,26 +3,32 @@ repo = 'Shougo/dein.vim'
 
 # colorscheme
 [[plugins]]
-repo = 'morhetz/gruvbox'
-
-[[plugins]]
-repo = 'Shougo/vimproc.vim'
-build = 'make'
-
-[[plugins]]
-repo = 'Shougo/unite-help'
-on_source = 'unite.vim'
+repo = 'cocopon/iceberg.vim'
 
 [[plugins]]
 repo = 'simeji/winresizer'
 
+# filer
 [[plugins]]
-repo = 'vim-airline/vim-airline'
+repo = 'cocopon/vaffle.vim'
+
+# git
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+
+
+[[plugins]]
+repo = 'itchyny/lightline.vim'
 hook_add = '''
-    let g:airline_powerline_fonts = 1
-    let g:airline_theme='gruvbox'
-    set laststatus=2
+    let g:lightline = {
+        \ 'colorscheme': 'wombat',
+        \ }
+    function! LightlineFugitive()
+        return fugitive#head()
+    endfunction
+
+    function! LightlineFiletype()
+      return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
+    endfunction
 '''
 
-#[[plugins]]
-#repo = 'vim-airline/vim-airline-themes'

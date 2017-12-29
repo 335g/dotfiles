@@ -1,24 +1,9 @@
 [[plugins]]
 repo = 'Shougo/context_filetype.vim'
 
-[[plugins]]
-repo = 'Shougo/neocomplete.vim'
-depends = 'context_filetype.vim'
-if = "has('lua')"
-on_event = 'InsertEnter'
-hook_source = '''
-  let g:neocomplete#enable_at_startup = 1
-  source ~/.vim/rc/plugins/neocomplete.rc.vim
-'''
-
-[[plugins]]
-repo = 'racer-rust/vim-racer'
-on_ft = 'rust'
-hook_source = '''
-  let g:racer_cmd = expand('/usr/local/bin/racer')
-  let $RUST_SRC_PATH = expand('/usr/local/src/rustc-1.10.0/src')
-  let g:racer_experimental_completer = 1
-'''
+#[[plugins]]
+#repo = 'mitsuse/autocomplete-swift'
+#on_ft = 'swift'
 
 [[plugins]]
 repo = 'rust-lang/rust.vim'
@@ -28,65 +13,26 @@ on_ft = 'rust'
 repo = 'rhysd/rust-doc.vim'
 on_ft = 'rust'
 
-[[plugins]]
-repo = 'racer-rust/vim-racer'
-on_ft = 'rust'
-
-[[plugins]]
-repo = 'toyamarinyon/vim-swift'
-on_ft = 'swift'
-
-[[plugins]]
-repo = 'thinca/vim-quickrun'
-on_map = {n = '<Plug>'}
-hook_add = 'nmap <silent> <Leader>r <Plug>(quickrun)'
-hook_source = 'source ~/.vim/rc/plugins/vim-quickrun.rc.vim'
-
-[[plugins]]
-repo = 'eagletmt/neco-ghc'
-on_ft = 'haskell'
-external_commands = 'ghc-mod'
-
-[[plugins]]
-repo = 'Shougo/neomru.vim'
-on_if = 1
-
-[[plugins]]
-repo = 'Shougo/unite.vim'
-depends = 'neomru.vim'
-hook_source = 'source ~/dotfiles/.vim/rc/plugins/unite.rc.vim'
-
-[[plugins]]
-repo = 'Shougo/vimfiler.vim'
-depends = 'unite.vim'
-on_map = {n = '<Plug>'}
-on_if = "isdirectory(bufname('%'))"
-hook_add = 'nnoremap <silent> [Space]v :<C-u>VimFilter -invisible<CR>'
-hook_source = 'source ~/.vim/rc/plugins/vimfiler.rc.vim'
-
-[[plugins]]
-repo = 'kana/vim-filetype-haskell'
-on_ft = 'haskell'
-
-[[plugins]]
-repo = 'itchyny/vim-haskell-indent'
-on_ft = 'haskell'
+#[[plugins]]
+#repo = 'racer-rust/vim-racer'
+#on_ft = 'rust'
+#hook_source = '''
+#    let g:racer_cmd = expand('~/.cargo/bin/racer')
+#'''
 
 [[plugins]]
 repo = 'cespare/vim-toml'
 on_ft = 'toml'
 
 [[plugins]]
-repo = 'elzr/vim-json'
-on_ft = 'json'
-
-[[plugins]]
-repo = 'rcmdnk/vim-markdown'
-on_ft = ['markdown', 'mkd', 'md']
-
-[[plugins]]
 repo = 'vim-jp/vimdoc-ja'
 on_ft = 'help'
 
+# private
 
-
+#[[plugins]]
+#repo = '~/dev/Vim/sample.vim'
+#on_ft = 'vim'
+#hook_source = '''
+#    let g:sample#enable_at_startup = 1
+#'''

@@ -1,35 +1,34 @@
 
-if [ ! -f ~/.zshrc.zwc -o ~/.zshrc -nt ~/.zshrc.zwc ]; then
-  zcompile ~/.zshrc
-fi
-
 ###################################################
 # zplug
 ###################################################
 
-[[ -f $HOME/.zplug/zplug ]] || return
+if [[ ! -d ~/.zplug ]];then
+  git clone https://github.com/zplug/zplug ~/.zplug
+fi
 
-source $HOME/.zplug/zplug
+#source ~/.zplug/init.zsh
+source $ZPLUG_HOME/init.zsh
 
-
+zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 zplug "rimraf/k"
 zplug "zsh-users/zsh-history-substring-search"
-zplug "zsh-users/zsh-syntax-highlighting"
+#zplug "zsh-users/zsh-syntax-highlighting"
 zplug "b4b4r07/auto-fu.zsh"
 zplug "b4b4r07/enhancd", use:init.sh
-
+zplug "peco/peco", as:command, from:gh-r, frozen:1
+zplug "jhawthorn/fzy", as:command, hook-build:"make && sudo make install"
 
 # installation check => install
 if ! zplug check --verbose; then
-    printf "Install? [y/N]: "
-    if read -q; then
-        echo; zplug install
-    else
-        echo
-    fi
+  printf 'Install? [y/N]: '
+  if read -q; then
+    echo; zplug install
+  fi
 fi
 
-zplug load
+# Then, source plugins and add commands to $PATH
+zplug load --verbose
 
 ####################################################
 # visualizaion
@@ -89,8 +88,13 @@ HISTFILE=~/.zsh_history
 HISTSIZE=1000000
 SAVEHIST=1000000
 setopt hist_ignore_dups     # 前と重複する行は記録しない
+setopt hist_ignore_all_dups # 重複したhistoryは追加しない
 setopt share_history        # 同時に起動したzshの間でヒストリを共有する
 setopt hist_reduce_blanks   # 余分なスペースを削除してヒストリに保存する
+setopt auto_pushd           # cdしたらpushd
+setopt auto_list            # 補完候補が複数ある時に一覧表示
+setopt auto_menu            # 補完候補が複数ある時に自動的に一覧表示する
+setopt no_beep              #
 setopt HIST_IGNORE_SPACE    # 行頭がスペースのコマンドは記録しない
 setopt HIST_IGNORE_ALL_DUPS # 履歴中の重複行をファイル記録前に無くす
 setopt HIST_FIND_NO_DUPS    # 履歴検索中、(連続してなくとも)重複を飛ばす
@@ -112,7 +116,6 @@ zshaddhistory() {
 ####################################################
 
 alias vi=vim
-alias vim=/usr/local/bin/vim
 alias la='ls -a'
 alias lf='ls -f'
 alias ll='ls -l'
@@ -121,4 +124,5 @@ alias mv='nocorrect mv'
 alias cp='nocorrect cp'
 alias mkdir='nocorrect mkdir'
 alias where='command -v'
-alias py='python3.5'
+#alias py='python3.5'
+alias e='exa'

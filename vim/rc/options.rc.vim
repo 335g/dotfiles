@@ -1,58 +1,5 @@
 
-if &compatible
-  set nocompatible
-endif
-
-" Const {{{1
-
-let $CACHE           = expand('$HOME/.cache')
-let s:dein_dir       = expand('$CACHE/dein')
-let s:dein_path      = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
-let s:rc_dir         = expand('$HOME/dotfiles/vim/rc')
-let s:dein_toml      = s:rc_dir . '/dein.toml'
-let s:dein_lazy_toml = s:rc_dir . '/dein_lazy.toml'
-let s:dein_neo_toml  = s:rc_dir . '/dein_neo.toml'
-
-function! s:source_rc(path) "{{{
-  let abspath = resolve(s:rc_dir . '/' . a:path)
-  execute 'source' fnameescape(abspath)
-endfunction"}}}
-
-" }}}
-" `dein` {{{1
-
-if !isdirectory(expand($CACHE))
-  call mkdir(expand($CACHE), 'p')
-endif
-
-if !isdirectory(s:dein_path)
-  execute '!git clone git://github.com/Shougo/dein.vim' s:dein_path
-endif
-execute 'set runtimepath^=' . s:dein_path
-
-if dein#load_state(s:dein_dir)
-  call dein#begin(s:dein_dir)
-  call dein#load_toml(s:dein_toml, {'lazy': 0})
-  call dein#load_toml(s:dein_lazy_toml, {'lazy': 1})
-  call dein#end()
-  call dein#save_state()
-endif
-
-if dein#check_install()
-  call dein#install()
-endif
-
-filetype plugin indent on
-
-" }}}
-" Library {{{
-
-" quickrun
-let g:quickrun_config = {}
-
-" }}}
-" Setting {{{
-
+set sh=zsh                          "デフォルトで起動するのはzsh
 set enc=utf-8
 set fenc=utf-8
 set fencs=iso-2022-jp,euc-p,cp932
@@ -86,24 +33,4 @@ set title                           "タイトル
 set showcmd                         "ステータスラインにコマンドを表示
 set laststatus=2                    "ステータスラインを常に表示
 set backspace=indent,eol,start      "バックスペースでなんでも削除可能に
-
-"}}}
-
-" Colorscheme
-syntax enable
-set background=dark
-colorscheme gruvbox
-
-" key mapping
-call s:source_rc('mappings.rc.vim')
-
-" Programming {{{1
-" Rust {{{2
-let g:rustfmt_command = '$HOME/.cargo/bin/rustfmt'
-let g:quickrun_config.rust = {'exec' : 'cargo run'}
-"}}}
-" Swift {{{2
-"}}}
-"}}}
-" Misc {{{
-" vim:fdm=marker expandtab fdc=3 ft=vim ts=2 sw=2 sts=2
+"set filetype
