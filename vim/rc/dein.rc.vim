@@ -8,7 +8,7 @@ call dein#begin(s:path, expand('<sfile>'))
 call dein#load_toml('~/.vim/rc/dein.toml', {'lazy': 0})
 call dein#load_toml('~/.vim/rc/dein_lazy.toml', {'lazy': 1})
 
-call dein#add('~/dev/NeoVim/sample', {'name': 'sample'})
+call dein#add('~/dev/neovim/sample', {'name': 'sample'})
 
 if has('nvim')
   call dein#load_toml('~/.vim/rc/dein_neo.toml', {})
