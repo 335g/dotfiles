@@ -1,34 +1,34 @@
 
-###################################################
-# zplug
-###################################################
+# ###################################################
+# # zplug
+# ###################################################
 
-if [[ ! -d ~/.zplug ]];then
-  git clone https://github.com/zplug/zplug ~/.zplug
-fi
+# if [[ ! -d ~/.zplug ]];then
+#   git clone https://github.com/zplug/zplug ~/.zplug
+# fi
 
-#source ~/.zplug/init.zsh
-source $ZPLUG_HOME/init.zsh
+# #source ~/.zplug/init.zsh
+# source $ZPLUG_HOME/init.zsh
 
-zplug 'zplug/zplug', hook-build:'zplug --self-manage'
-zplug "rimraf/k"
-zplug "zsh-users/zsh-history-substring-search"
-#zplug "zsh-users/zsh-syntax-highlighting"
-zplug "b4b4r07/auto-fu.zsh"
-zplug "b4b4r07/enhancd", use:init.sh
-zplug "peco/peco", as:command, from:gh-r, frozen:1
-zplug "jhawthorn/fzy", as:command, hook-build:"make && sudo make install"
+# zplug 'zplug/zplug', hook-build:'zplug --self-manage'
+# zplug "rimraf/k"
+# zplug "zsh-users/zsh-history-substring-search"
+# #zplug "zsh-users/zsh-syntax-highlighting"
+# zplug "b4b4r07/auto-fu.zsh"
+# zplug "b4b4r07/enhancd", use:init.sh
+# zplug "peco/peco", as:command, from:gh-r, frozen:1
+# zplug "jhawthorn/fzy", as:command, hook-build:"make && sudo make install"
 
-# installation check => install
-if ! zplug check --verbose; then
-  printf 'Install? [y/N]: '
-  if read -q; then
-    echo; zplug install
-  fi
-fi
+# # installation check => install
+# if ! zplug check --verbose; then
+#   printf 'Install? [y/N]: '
+#   if read -q; then
+#     echo; zplug install
+#   fi
+# fi
 
-# Then, source plugins and add commands to $PATH
-zplug load --verbose
+# # Then, source plugins and add commands to $PATH
+# zplug load --verbose
 
 ####################################################
 # visualizaion
