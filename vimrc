@@ -1,7 +1,7 @@
 
 let g:mapleader = "\<Space>" " Leaderキーをスペースに設定
 
-" {{{ dein settings
+" {{{ dein
 let s:dein_dir = has('nvim') ? expand('~/.cache/dein/nvim') : expand('~/.cache/dein/vim')
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 
@@ -16,14 +16,11 @@ if dein#load_state(s:dein_dir)
   call dein#begin(s:dein_dir)
 
   " {{{ plugins
-  
-  call dein#add('cocopon/iceberg.vim') " colorscheme
-  call dein#add('itchyny/lightline.vim') " light and configurable statusline/tabline
-  call dein#add('tpope/vim-fugitive') " git wrapper 
-
+  call dein#add('cocopon/iceberg.vim')    " colorscheme
+  call dein#add('itchyny/lightline.vim')  " light and configurable statusline/tabline
+  call dein#add('tpope/vim-fugitive')     " git wrapper 
   " }}}
 
-" end settings
   call dein#end()
   call dein#save_state()
 endif
