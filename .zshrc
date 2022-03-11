@@ -1,35 +1,4 @@
 
-# ###################################################
-# # zplug
-# ###################################################
-
-# if [[ ! -d ~/.zplug ]];then
-#   git clone https://github.com/zplug/zplug ~/.zplug
-# fi
-
-# #source ~/.zplug/init.zsh
-# source $ZPLUG_HOME/init.zsh
-
-# zplug 'zplug/zplug', hook-build:'zplug --self-manage'
-# zplug "rimraf/k"
-# zplug "zsh-users/zsh-history-substring-search"
-# #zplug "zsh-users/zsh-syntax-highlighting"
-# zplug "b4b4r07/auto-fu.zsh"
-# zplug "b4b4r07/enhancd", use:init.sh
-# zplug "peco/peco", as:command, from:gh-r, frozen:1
-# zplug "jhawthorn/fzy", as:command, hook-build:"make && sudo make install"
-
-# # installation check => install
-# if ! zplug check --verbose; then
-#   printf 'Install? [y/N]: '
-#   if read -q; then
-#     echo; zplug install
-#   fi
-# fi
-
-# # Then, source plugins and add commands to $PATH
-# zplug load --verbose
-
 ####################################################
 # visualizaion
 ####################################################
@@ -120,9 +89,14 @@ alias la='ls -a'
 alias lf='ls -f'
 alias ll='ls -l'
 alias lal='ls -al'
-alias mv='nocorrect mv'
-alias cp='nocorrect cp'
-alias mkdir='nocorrect mkdir'
+# alias mv='nocorrect mv'
+# alias cp='nocorrect cp'
+# alias mkdir='nocorrect mkdir'
 alias where='command -v'
-#alias py='python3.5'
 alias e='exa'
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/335g/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/335g/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/335g/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/335g/google-cloud-sdk/completion.zsh.inc'; fi
