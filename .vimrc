@@ -17,9 +17,9 @@ if dein#load_state(s:dein_dir)
 
   " {{{ plugins
   
-  call dein#add('cocopon/iceberg.vim') " Colorscheme
-  call dein#add('itchyny/lightline.vim') " A light and configurable statusline/tabline
-  
+  call dein#add('cocopon/iceberg.vim') " colorscheme
+  call dein#add('itchyny/lightline.vim') " light and configurable statusline/tabline
+  call dein#add('tpope/vim-fugitive') " git wrapper 
 
   " }}}
 
@@ -52,14 +52,18 @@ filetype plugin indent on
 
 " lightline {{{
 let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ 'active': {
-      \ 'left': [ ['mode', 'paste'], ['readonly', 'branchName', 'filepath', 'modified'] ]
-      \ },
-      \ 'component_function':{
-      \ 'filepath': 'FilePath',
-      \ },
-      \ }
+  \   'colorscheme': 'wombat',
+  \   'active': {
+  \     'left': [
+  \       ['mode', 'paste'],
+  \       ['readonly', 'gitbranch', 'filepath', 'modified']
+  \     ]
+  \   },
+  \   'component_function':{
+  \     'filepath': 'FilePath',
+  \     'gitbranch': 'FugitiveHead',
+  \   },
+  \ }
 
 function! FilePath()
   if winwidth(0) > 90
