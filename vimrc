@@ -1,93 +1,77 @@
 
 let g:mapleader = "\<Space>" " Leaderキーをスペースに設定
 
-" {{{ dein
-let s:dein_dir = has('nvim') ? expand('~/.cache/dein/nvim') : expand('~/.cache/dein/vim')
-let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
+call plug#begin('~/.vim/plugged')
 
-if &runtimepath !~# '/dein.vim'
-  if !isdirectory(s:dein_repo_dir)
-    execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
-  endif
-  execute 'set runtimepath^=' . s:dein_repo_dir
-endif
+" colors
+Plug 'cocopon/iceberg.vim', {'do': 'cp colors/* ~/.vim/colors/'}
+Plug 'dracula/vim', {'do': 'cp colors/* ~/.vim/colors/'}
 
-if dein#load_state(s:dein_dir)
-  call dein#begin(s:dein_dir)
+Plug 'ryanoasis/vim-devicons'
+Plug 'itchyny/lightline.vim'
+  let g:lightline = {
+    \   'colorscheme': 'wombat',
+    \   'active': {
+    \     'left': [
+    \       ['mode', 'paste'],
+    \       ['readonly', 'gitbranch', 'filepath', 'modified']
+    \     ]
+    \   },
+    \   'component_function':{
+    \     'filepath': 'FilePath',
+    \     'gitbranch': 'FugitiveHead',
+    \   },
+    \ }
+  
+  function! FilePath()
+    if winwidth(0) > 90
+      return expand("%:s")
+    else
+      return expand("%:t")
+    endif
+  endfunction
 
-  " {{{ plugins
-  call dein#add('cocopon/iceberg.vim')    " colorscheme
-  call dein#add('itchyny/lightline.vim')  " light and configurable statusline/tabline
-  call dein#add('tpope/vim-fugitive')     " git wrapper 
-  " }}}
+" git
+Plug 'tpope/vim-fugitive'
+  nmap     <Leader>g :Git<CR>gg<c-n>
+  nnoremap <Leader>d :Gdiff<CR>
+Plug 'rhysd/git-messenger.vim'
 
-  call dein#end()
-  call dein#save_state()
-endif
+Plug 'rust-lang/rust.vim'
+Plug 'junegunn/fzf', { 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+  let g:fzf_layout = { 'down': '30%' }
+  nnoremap <C-P> :Files<CR>
 
-if dein#check_install()
-  call dein#install()
-endif
+Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': { -> coc#util#install() }}
+Plug 'mattn/emmet-vim'
+Plug 'markonm/traces.vim' " 置換プレビュー
+Plug 'lambdalisue/fern.vim'
+Plug 'lambdalisue/fern-hijack.vim'
+Plug 'lambdalisue/fern-git-status.vim'
+Plug 'vim-jp/vimdoc-ja'
 
-function! DeinClean() abort
-  let s:removed_plugins = dein#check_clean()
-  if len(s:removed_plugins) > 0
-    echom s:removed_plugins
-    call map(s:removed_plugins, "delete(v:val, 'rf')")
-    call dein#recache_runtimepath()
-  endif
-endfunction
+call plug#end()
 
-command! CleanPlugins call DeinClean()
-" }}}
-
-" シンタックス有効化
-syntax enable
-
-" ファイル形式毎のプラグインとインデントを有効にする
-filetype plugin indent on
-
-" lightline {{{
-let g:lightline = {
-  \   'colorscheme': 'wombat',
-  \   'active': {
-  \     'left': [
-  \       ['mode', 'paste'],
-  \       ['readonly', 'gitbranch', 'filepath', 'modified']
-  \     ]
-  \   },
-  \   'component_function':{
-  \     'filepath': 'FilePath',
-  \     'gitbranch': 'FugitiveHead',
-  \   },
-  \ }
-
-function! FilePath()
-  if winwidth(0) > 90
-    return expand("%:s")
-  else
-    return expand("%:t")
-  endif
-endfunction
-" }}}
-
-" カラースキーム {{{
 colorscheme iceberg
-" }}}
-
 
 " オプション {{{
-set autoindent      " 改行時に前の行のインデントを継続する
-set background=dark " 背景色
-set encoding=utf-8  " 文字コード: UTF8
-set expandtab       " タブ->空白
-set laststatus=2    " 最終行にステータスラインを追加する
-set noshowmode      " 一番下の --INSERT -- 等を非表示にする
-set number          " 行番号
-set shiftwidth=4    " 自動インデント幅
-set smartindent     " 改行時に入力された行の末尾に合わせて次の行のインデントを増減する
-set softtabstop=2   " 連続した空白に対してタブキーやバックスペースキーでカーソルが動く幅（デフォルトでは無効: 0）
-set tabstop=4       " タブ幅
+syntax enable " シンタックス有効化
+filetype plugin indent on " ファイル形式毎のプラグインとインデントを有効にする
+
+set autoindent                                " 改行時に前の行のインデントを継続する
+set background=dark                           " 背景色
+set encoding=UTF-8                            " 文字コード: UTF8
+set expandtab                                 " タブ->空白
+set helplang=ja,en                            " ヘルプはデフォルトで日本語
+set guifont=HackGenNerdConsole-Regular,Monaco " font
+set laststatus=2                              " 最終行にステータスラインを追加する
+set noshowmode                                " 一番下の --INSERT -- 等を非表示にする
+set number                                    " 行番号
+set shiftwidth=4                              " 自動インデント幅
+set smartindent                               " 改行時に入力された行の末尾に合わせて次の行のインデントを増減する
+set softtabstop=2                             " 連続した空白に対してタブキーやバックスペースキーでカーソルが動く幅（デフォルトでは無効: 0）
+set tabstop=4                                 " タブ幅
 
 " インデント
 augroup fileTypeIndent
@@ -107,7 +91,6 @@ augroup fileTypeIndent
   au FileType rust setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
   au FileType markdown setlocal tabstop=2 shiftwidth=2 expandtab
 augroup END
-
 " }}}
 
 
@@ -117,5 +100,6 @@ augroup END
 nnoremap <Leader>. :new ~/.vimrc<CR>
 nnoremap <Leader>s :exe "source" expand("%")<CR>
 
-
+" fzf
+nnoremap <C-P> :Files<CR>
 " }}}
