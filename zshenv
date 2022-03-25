@@ -1,13 +1,10 @@
 export EDITOR=vim
 export SHELL=zsh
 export LANG=en_US.UTF-8
-export PATH=/usr/local/sbin
-export PATH=$HOME/go/bin
-export PATH=/bin
-export PATH=$HOME/.local/bin
-export PATH=/usr/local/bin:$PATH
+export PATH=$HOME/go/bin:$PATH
 export PATH=/Users/335g/Library/Python/3.9/bin:$PATH
-export PATH=/Users/335g/google-cloud-sdk/bin:$PATH
-export PATH=/Users/335g/.cargo/env:$PATH
+export PATH=/Users/335g/.cargo/bin:$PATH
 export STARSHIP_CACHE=~/.starship/cache
-
+export XDG_CONFIG_HOME=$HOME/.config
+export FZF_DEFAULT_OPTS='--height=50% --layout=reverse --inline-info --preview "bat --color=always --style=header,grid --line-range=:100 {}"'
+export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'

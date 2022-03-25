@@ -1,16 +1,37 @@
 
 let g:mapleader = "\<Space>" " Leaderキーをスペースに設定
 
+set rtp+=/usr/local/opt/fzf
+
 call plug#begin('~/.vim/plugged')
+" my plugins
+"Plug '~/dev/vim/session.vim'
 
 " colors
-Plug 'cocopon/iceberg.vim', {'do': 'cp colors/* ~/.vim/colors/'}
-Plug 'dracula/vim', {'do': 'cp colors/* ~/.vim/colors/'}
+Plug 'cocopon/iceberg.vim'
+Plug 'cocopon/colorswatch.vim'
+Plug 'cocopon/inspecthi.vim'
+  nnoremap <C-i> :Inspecthi<CR>
+Plug 'dracula/vim'
+Plug 'file:///Users/335g/dev/vim/lilac.vim'
 
-Plug 'ryanoasis/vim-devicons'
+function! s:auto_update_colorscheme(...) abort
+    if &ft !=# 'vim'
+        echoerr 'Execute this command in colorscheme file buffer'
+    endif
+    setlocal autoread noswapfile
+    let interval = a:0 > 0 ? a:1 : 3000
+    let timer = timer_start(interval, {-> execute('checktime')}, {'repeat' : -1})
+    autocmd! BufReadPost <buffer> source %
+endfunction
+
+" ### Function only during develpment of colorscheme.
+command! -nargs=? AutoUpdateColorscheme call <SID>auto_update_colorscheme(<f-args>)
+
+" statusline
 Plug 'itchyny/lightline.vim'
   let g:lightline = {
-    \   'colorscheme': 'wombat',
+    \   'colorscheme': 'iceberg',
     \   'active': {
     \     'left': [
     \       ['mode', 'paste'],
@@ -35,25 +56,88 @@ Plug 'itchyny/lightline.vim'
 Plug 'tpope/vim-fugitive'
   nmap     <Leader>g :Git<CR>gg<c-n>
   nnoremap <Leader>d :Gdiff<CR>
-Plug 'rhysd/git-messenger.vim'
 
+" rust
 Plug 'rust-lang/rust.vim'
+  " 保存時にrustfmtで自動整形
+  let g:rustfmt_autosave = 1
+
+Plug 'neoclide/coc.nvim', {'branch': 'release' }
+  " Use <c-space> to trigger completion.
+  if has('nvim')
+    inoremap <silent><expr> <c-space> coc#refresh()
+  else
+    inoremap <silent><expr> <c-@> coc#refresh()
+  endif
+  
+  " Make <CR> auto-select the first completion item and notify coc.nvim to
+  " format on enter, <cr> could be remapped by other vim plugin
+  inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                                \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+  
+  " Use `[g` and `]g` to navigate diagnostics
+  " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+  nmap <silent> [g <Plug>(coc-diagnostic-prev)
+  nmap <silent> ]g <Plug>(coc-diagnostic-next)
+  
+  " GoTo code navigation.
+  nmap <silent> gd <Plug>(coc-definition)
+  nmap <silent> gy <Plug>(coc-type-definition)
+  nmap <silent> gi <Plug>(coc-implementation)
+  nmap <silent> gr <Plug>(coc-references)
+  
+  " Use K to show documentation in preview window.
+  nnoremap <silent> K :call <SID>show_documentation()<CR>
+  
+  function! s:show_documentation()
+    if (index(['vim','help'], &filetype) >= 0)
+      execute 'h '.expand('<cword>')
+    elseif (coc#rpc#ready())
+      call CocActionAsync('doHover')
+    else
+      execute '!' . &keywordprg . " " . expand('<cword>')
+    endif
+  endfunction
+  
+  " Highlight the symbol and its references when holding the cursor.
+  autocmd CursorHold * silent call CocActionAsync('highlight')
+
 Plug 'junegunn/fzf', { 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-  let g:fzf_layout = { 'down': '30%' }
+  let g:fzf_layout = { 'right': '80%' }
   nnoremap <C-P> :Files<CR>
 
-Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': { -> coc#util#install() }}
-Plug 'mattn/emmet-vim'
-Plug 'markonm/traces.vim' " 置換プレビュー
 Plug 'lambdalisue/fern.vim'
 Plug 'lambdalisue/fern-hijack.vim'
+Plug 'lambdalisue/fern-comparator-lexical.vim'
 Plug 'lambdalisue/fern-git-status.vim'
+Plug 'lambdalisue/fern-renderer-nerdfont.vim'
+
+"Plug 'vim-denops/denops.vim'
+"  " DEBUG MODE : Disable when not needed
+"  let g:denops#debug = 1
+"Plug 'vim-denops/denops-helloworld.vim'
+
+if has('nvim')
+  Plug 'antoinemadec/FixCursorHold.nvim' " for fern.vim & neovim
+    let g:cursorhold_updatetime = 100
+
+endif
+
+" syntax
+"Plug 'sheerun/vim-polyglot'
+Plug 'leafgarland/typescript-vim'
+
+" help
 Plug 'vim-jp/vimdoc-ja'
 
 call plug#end()
 
+" rust-analyzer inline hint
+autocmd VimEnter,ColorScheme * highlight link CocHintSign Comment
+
 colorscheme iceberg
+
 
 " オプション {{{
 syntax enable " シンタックス有効化
@@ -68,6 +152,7 @@ set guifont=HackGenNerdConsole-Regular,Monaco " font
 set laststatus=2                              " 最終行にステータスラインを追加する
 set noshowmode                                " 一番下の --INSERT -- 等を非表示にする
 set number                                    " 行番号
+set shell=zsh                                 " ターミナルモードのシェル
 set shiftwidth=4                              " 自動インデント幅
 set smartindent                               " 改行時に入力された行の末尾に合わせて次の行のインデントを増減する
 set softtabstop=2                             " 連続した空白に対してタブキーやバックスペースキーでカーソルが動く幅（デフォルトでは無効: 0）
@@ -93,13 +178,11 @@ augroup fileTypeIndent
 augroup END
 " }}}
 
+" Other
 
-" キーマップ {{{
+" VimShowHlGroup: Show highlight group name under a cursor
+command! VimShowHlGroup echo synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'name')
 
-" vimrc読み込み
-nnoremap <Leader>. :new ~/.vimrc<CR>
-nnoremap <Leader>s :exe "source" expand("%")<CR>
+" VimShowHlItem: Show highlight item name under a cursor
+command! VimShowHlItem echo synIDattr(synID(line("."), col("."), 1), "name")
 
-" fzf
-nnoremap <C-P> :Files<CR>
-" }}}
