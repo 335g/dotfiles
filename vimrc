@@ -57,10 +57,14 @@ Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'MunifTanjim/nui.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
-Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'sidebar-nvim/sidebar.nvim'
+Plug 'goolord/alpha-nvim'
+Plug 'petertriho/nvim-scrollbar'
+Plug 'kevinhwang91/nvim-hlslens'
 
 Plug 'cohama/lexima.vim'
-Plug 'itchyny/lightline.vim'
+"Plug 'itchyny/lightline.vim'
 Plug 'vim-jp/vimdoc-ja'
 
 Plug 'tpope/vim-fugitive'
@@ -82,17 +86,26 @@ Plug 'ray-x/cmp-treesitter'
 Plug 'simrat39/rust-tools.nvim'
 Plug 'j-hui/fidget.nvim'
 Plug 'folke/trouble.nvim'
+Plug 'folke/todo-comments.nvim'
+Plug 'mvllow/modes.nvim'
+
+Plug 'nvim-telescope/telescope.nvim'
+
+Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'yioneko/nvim-yati'
+Plug 'JoosepAlviste/nvim-ts-context-commentstring'
+Plug 'SmiteshP/nvim-gps'
 
 " for all colorscheme work
 Plug 'cocopon/colorswatch.vim'
 Plug 'cocopon/inspecthi.vim'
+Plug 'folke/tokyonight.nvim'
 
 " colorschemes
 Plug 'cocopon/iceberg.vim'
 " Plug 'wadackel/vim-dogrun'
 " Plug 'dracula/vim'
 
-Plug 'nvim-telescope/telescope.nvim'
 
 call plug#end()
 
@@ -101,29 +114,6 @@ syntax enable " シンタックス有効化
 
 set background=dark
 colorscheme iceberg
-
-" statusline
-let g:lightline = {
-\   'colorscheme': 'iceberg',
-\   'active': {
-\       'left': [
-\           ['mode', 'paste'],
-\           ['readonly', 'gitbranch', 'filepath', 'modified']
-\       ]
-\   },
-\   'component_function': {
-\       'filepath': 'FilePath',
-\       'gitbranch': 'FugitiveHead'
-\   },
-\ }
-
-function! FilePath()
-    if winwidth(0) > 90
-        return expand("%:s")
-    else
-        return expand("%:t")
-    endif
-endfunction
 
 " rust.vim
 let g:rustfmt_autosave = 1
@@ -159,8 +149,51 @@ nnoremap <silent> g[ <cmd>lua vim.diagnostic.goto_prev()<CR>
 nnoremap <silent> g] <cmd>lua vim.diagnostic.goto_next()<CR>
 
 lua <<EOF
+-- Note: `vim.opt.cursorline` must be set to true for lines to be hightlighted
+-- with `mvllow/modes.nvim`
+vim.opt.cursorline = true
+
+require('alpha').setup(require('alpha.themes.startify').config)
+
+local colors = require('tokyonight.colors').setup {}
+require('scrollbar').setup {
+    handle = {
+        color = colors.bg_highlight,
+    },
+    marks = {
+        Search = { color = colors.orange },
+        Error = { color = colors.error },
+        Warn = { color = colors.warning },
+        Info = { color = colors.info },
+        Hint = { color = colors.hint },
+        Misc = { color = colors.purple },
+    }
+}
+require('hlslens').setup {
+    calm_down = true,
+    nearest_only = true,
+    nearest_float_when = 'always'
+}
+require('scrollbar.handlers.search').setup {}
+require('lualine').setup {
+    options = {
+        theme= 'iceberg_dark',
+    },
+}
+require('sidebar-nvim').setup {
+    open = true,
+    initial_width = 30,
+    sections = {
+        "datetime",
+        "git",
+        "diagnostics",
+    },
+}
+require('nvim-gps').setup {}
 require('fidget').setup {}
 require('trouble').setup {}
+require('todo-comments').setup {}
+require('modes').setup {}
 require('rust-tools').setup {
     tools = {
         autoSetHints = true,
@@ -236,5 +269,10 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 -- The following example advertise capabilities to `clangd`.
 require'lspconfig'.clangd.setup {
   capabilities = capabilities,
+}
+
+require("nvim-treesitter.configs").setup {
+    yati = { enable = true },
+    context_commentstring = { enable = true },
 }
 EOF
