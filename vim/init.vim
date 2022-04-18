@@ -40,6 +40,7 @@ set matchtime=1 " ジャンプ時間
 set matchpairs+=<:> " 対応する括弧の強調表示
 set updatetime=300 " udpate-time[ms] for CursorHold
 set shortmess+=c
+set cursorline " カーソル行をハイライトする
 
 " Set completeopt to have a better completion experience
 " :help completeopt
@@ -53,6 +54,12 @@ set completeopt=menu,menuone,noselect
 set signcolumn=yes
 
 call plug#begin('~/.vim/plugged')
+" Lua
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'tami5/sqlite.lua'
+Plug 'MunifTanjim/nui.nvim'
+
 " Treesitter
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
@@ -67,6 +74,8 @@ Plug 'tamago324/nlsp-settings.nvim'
 
 " View --------------------------
 Plug 'j-hui/fidget.nvim'
+Plug 'goolord/alpha-nvim'
+Plug 'petertriho/nvim-scrollbar'
 
 " Auto Completion --------------------
 Plug 'hrsh7th/nvim-cmp'
@@ -81,16 +90,25 @@ Plug 'hrsh7th/cmp-cmdline'
 Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'ray-x/cmp-treesitter'
 
+" FuzzyFinder ------------------
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-frecency.nvim'
+
 " Snippet
 Plug 'L3MON4D3/LuaSnip'
 Plug 'kevinhwang91/nvim-hclipboard'
 Plug 'rafamadriz/friendly-snippets'
+
+" Search
+Plug 'kevinhwang91/nvim-hlslens'
 
 " Programming Language Specific
 Plug 'simrat39/rust-tools.nvim'
 
 " Color -------------------
 Plug 'folke/lsp-colors.nvim'
+Plug 'folke/todo-comments.nvim'
+Plug 'mvllow/modes.nvim'
 Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 Plug 'EdenEast/nightfox.nvim'
 Plug 'cocopon/iceberg.vim'
@@ -100,14 +118,14 @@ call plug#end()
 filetype plugin indent on " ファイル形式毎のプラグインとインデントを有効にする
 syntax enable " シンタックス有効化
 
-" Enable true color
-"if exists('+termguicolors') && !has('gui_running')
-"    set termguicolors
-"endif
-
 set background=dark
 colorscheme iceberg
 
+" 
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 lua <<EOF
 local cmp = require("cmp")
@@ -190,19 +208,21 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 require'lspconfig'.clangd.setup {
   capabilities = capabilities,
 }
-
+require("telescope").load_extension("frecency")
 require("nvim-treesitter.configs").setup {
     yati = { enable = true },
     context_commentstring = { enable = true },
 }
-
 require('lualine').setup {
     options = {
         theme= 'iceberg_dark',
     },
 }
+require('todo-comments').setup {}
 require('nvim-gps').setup {}
 require('fidget').setup {}
+require('modes').setup {}
+require('alpha').setup(require("alpha.themes.startify").config)
 require('rust-tools').setup {
     tools = {
         autoSetHints = true,

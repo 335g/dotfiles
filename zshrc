@@ -56,5 +56,4 @@ if [ -f '/Users/335g/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/335g
 # customize prompt by starship
 eval "$(starship init zsh)" for starship
 
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
