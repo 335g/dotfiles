@@ -41,6 +41,7 @@ set matchpairs+=<:> " 対応する括弧の強調表示
 set updatetime=300 " udpate-time[ms] for CursorHold
 set shortmess+=c
 set cursorline " カーソル行をハイライトする
+set confirm " 終了時に保存されてない場合保存するか聞いてくれる
 
 " Set completeopt to have a better completion experience
 " :help completeopt
@@ -52,6 +53,13 @@ set completeopt=menu,menuone,noselect
 " have a fixed column for the diagnostics to appear in
 " this removes the jitter when warnings/errors flow in
 set signcolumn=yes
+
+" true color
+if !has('gui_running') && &term =~ '^\%(screen\|tmux\)'
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+endif
+set termguicolors
 
 call plug#begin('~/.vim/plugged')
 " Lua
@@ -76,6 +84,7 @@ Plug 'tamago324/nlsp-settings.nvim'
 Plug 'j-hui/fidget.nvim'
 Plug 'goolord/alpha-nvim'
 Plug 'petertriho/nvim-scrollbar'
+Plug 'kyazdani42/nvim-web-devicons'
 
 " Auto Completion --------------------
 Plug 'hrsh7th/nvim-cmp'
@@ -99,6 +108,12 @@ Plug 'L3MON4D3/LuaSnip'
 Plug 'kevinhwang91/nvim-hclipboard'
 Plug 'rafamadriz/friendly-snippets'
 
+" Git
+Plug 'TimUntersberger/neogit'
+
+" Operation
+Plug 'phaazon/hop.nvim'
+
 " Search
 Plug 'kevinhwang91/nvim-hlslens'
 
@@ -106,6 +121,7 @@ Plug 'kevinhwang91/nvim-hlslens'
 Plug 'simrat39/rust-tools.nvim'
 
 " Color -------------------
+Plug 'norcalli/nvim-colorizer.lua'
 Plug 'folke/lsp-colors.nvim'
 Plug 'folke/todo-comments.nvim'
 Plug 'mvllow/modes.nvim'
@@ -119,13 +135,18 @@ filetype plugin indent on " ファイル形式毎のプラグインとインデ�
 syntax enable " シンタックス有効化
 
 set background=dark
-colorscheme iceberg
+colorscheme nightfox
 
 " 
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
+augroup RustCommands
+    autocmd!
+    autocmd FileType rust nnoremap <silent><leader>oc <cmd>RustOpenCargo<CR>
+augroup END
 
 lua <<EOF
 local cmp = require("cmp")
@@ -213,15 +234,36 @@ require("nvim-treesitter.configs").setup {
     yati = { enable = true },
     context_commentstring = { enable = true },
 }
-require('lualine').setup {
-    options = {
-        theme= 'iceberg_dark',
-    },
-}
+require('lualine').setup {}
 require('todo-comments').setup {}
 require('nvim-gps').setup {}
 require('fidget').setup {}
+require('hop').setup {}
+require('colorizer').setup {}
+require('neogit').setup {}
+
+vim.api.nvim_set_keymap('n', 'f', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>", {})
+vim.api.nvim_set_keymap('n', 'F', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>", {})
+vim.api.nvim_set_keymap('o', 'f', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, inclusive_jump = true })<cr>", {})
+vim.api.nvim_set_keymap('o', 'F', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, inclusive_jump = true })<cr>", {})
+vim.api.nvim_set_keymap('', 't', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>", {})
+vim.api.nvim_set_keymap('', 'T', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>", {})
+
+local colors = require('tokyonight.colors').setup {}
+require('scrollbar').setup {
+    handle = {
+        color = colors.bg_highlight,
+    }
+}
+require('scrollbar.handlers.search').setup {}
+
+vim.opt.cursorline = true
 require('modes').setup {}
+vim.cmd('hi ModesCopy guibg=#f5c359 ctermfg=100')
+vim.cmd('hi ModesDelete guibg=#c75c6a ctermfg=100')
+vim.cmd('hi ModesInsert guibg=#78ccc5 ctermfg=100')
+vim.cmd('hi ModesVisual guibg=#9745be ctermfg=100')
+
 require('alpha').setup(require("alpha.themes.startify").config)
 require('rust-tools').setup {
     tools = {

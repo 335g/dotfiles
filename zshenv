@@ -1,5 +1,5 @@
 export EDITOR=vim
-export SHELL=zsh
+export SHELL=/bin/zsh
 export LANG=en_US.UTF-8
 export PATH=$HOME/go/bin:$PATH
 export PATH=$HOME/Library/Python/3.9/bin:$PATH
