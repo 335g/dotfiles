@@ -110,6 +110,8 @@ Plug 'rafamadriz/friendly-snippets'
 
 " Git
 Plug 'TimUntersberger/neogit'
+Plug 'rhysd/committia.vim'
+Plug 'lewis6991/gitsigns.nvim'
 
 " Operation
 Plug 'phaazon/hop.nvim'
@@ -240,7 +242,12 @@ require('nvim-gps').setup {}
 require('fidget').setup {}
 require('hop').setup {}
 require('colorizer').setup {}
+
+-- neogit
 require('neogit').setup {}
+vim.api.nvim_set_keymap("n", "git", "<Cmd>Neogit<CR>", { noremap = true, silent = true })
+
+require('gitsigns').setup {}
 
 vim.api.nvim_set_keymap('n', 'f', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>", {})
 vim.api.nvim_set_keymap('n', 'F', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>", {})
@@ -250,11 +257,7 @@ vim.api.nvim_set_keymap('', 't', "<cmd>lua require'hop'.hint_char1({ direction =
 vim.api.nvim_set_keymap('', 'T', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>", {})
 
 local colors = require('tokyonight.colors').setup {}
-require('scrollbar').setup {
-    handle = {
-        color = colors.bg_highlight,
-    }
-}
+require('scrollbar').setup {}
 require('scrollbar.handlers.search').setup {}
 
 vim.opt.cursorline = true
