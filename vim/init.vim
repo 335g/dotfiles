@@ -88,6 +88,7 @@ Plug 'j-hui/fidget.nvim'
 Plug 'goolord/alpha-nvim'
 Plug 'petertriho/nvim-scrollbar'
 Plug 'kyazdani42/nvim-web-devicons'
+Plug 'lukas-reineke/indent-blankline.nvim'
 
 " Auto Completion --------------------
 Plug 'hrsh7th/nvim-cmp'
@@ -348,6 +349,11 @@ require('neo-tree').setup {
 local colors = require('tokyonight.colors').setup {}
 require('scrollbar').setup {}
 require('scrollbar.handlers.search').setup {}
+
+require('indent_blankline').setup {
+    show_current_context = false,
+    use_treesitter = true,
+}
 
 vim.opt.cursorline = true
 require('modes').setup {}
