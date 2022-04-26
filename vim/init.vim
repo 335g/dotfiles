@@ -21,7 +21,7 @@ set softtabstop=4
 set shiftround " インデントをshiftwidthの倍数に丸める
 set expandtab " タブの代わりにスペース
 
-" 
+"
 set wrapscan " 最後まで検索したら先頭に戻る
 set ruler " カーソルがある行列をハイライトする
 set scrolloff=5 " スクロール時の余白
@@ -122,13 +122,16 @@ Plug 'phaazon/hop.nvim'
 Plug 'haya14busa/vim-edgemotion'
 Plug 'yutkat/wb-only-current-line.vim'
 Plug 'machakann/vim-sandwich'
-Plug 'cohama/lexima.vim'
+Plug 'windwp/nvim-autopairs'
+Plug 'andymass/vim-matchup'
+Plug 'ntpeters/vim-better-whitespace'
 
 " Search
 Plug 'kevinhwang91/nvim-hlslens'
 
 " Programming Language Specific
 Plug 'simrat39/rust-tools.nvim'
+Plug 'saecki/crates.nvim', { 'tag': 'v0.2.1' }
 
 " Color -------------------
 Plug 'norcalli/nvim-colorizer.lua'
@@ -147,12 +150,13 @@ syntax enable " シンタックス有効化
 set background=dark
 colorscheme nightfox
 
-" 
+"
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
+" 次に文字が出てくるまでジャンプ
 map <C-j> <Plug>(edgemotion-j)
 map <C-k> <Plug>(edgemotion-k)
 
@@ -160,6 +164,13 @@ augroup RustCommands
     autocmd!
     autocmd FileType rust nnoremap <silent><leader>oc <cmd>RustOpenCargo<CR>
 augroup END
+
+augroup TomlCommands
+    autocmd!
+    autocmd FileType toml lua require('cmp').setup.buffer { sources = { { name = 'crates' } } }
+augroup END
+
+let g:strip_whitespace_on_save = 1
 
 lua <<EOF
 local cmp = require("cmp")
@@ -233,6 +244,8 @@ cmp.setup.cmdline(":", {
 	},
 	sources = cmp.config.sources({ { name = "path" } }, { { name = "cmdline" } }),
 })
+local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({ map_char = { tex = "" } }))
 
 -- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -242,16 +255,44 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 require'lspconfig'.clangd.setup {
   capabilities = capabilities,
 }
+
+-- lspconfig
+local on_attach = function(client, bufnr)
+  -- Enable completion triggered by <c-x><c-o>
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  -- Mappings.
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+end
+local servers = { 'pyright', 'rust_analyzer', 'tsserver' }
+for _, lsp in pairs(servers) do
+    require('lspconfig')[lsp].setup {
+        on_attach = on_attach,
+        flags = {
+          -- This will be the default in neovim 0.7+
+          debounce_text_changes = 150,
+        }
+    }
+end
+
 require("telescope").load_extension("frecency")
 require("nvim-treesitter.configs").setup {
     yati = { enable = true },
     context_commentstring = { enable = true },
+    matchup = {
+        enable = true,
+    }
 }
 require('lualine').setup {}
 require('todo-comments').setup {}
 require('nvim-gps').setup {}
 require('fidget').setup {}
 require('hop').setup {}
+require('nvim-autopairs').setup {}
 require('colorizer').setup {}
 require('neogit').setup {}
 require('gitsigns').setup {}
@@ -386,6 +427,9 @@ require('rust-tools').setup {
         }
     },
 }
+require('crates').setup {}
+
+
 vim.api.nvim_set_keymap("n", "hw", "<Cmd>HopWord<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("x", "hw", "<Cmd>HopWord<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "gx", "<Cmd>NeoTreeRevealToggle<CR>", { noremap = true, silent = true })
