@@ -141,6 +141,7 @@ Plug 'mvllow/modes.nvim'
 Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 Plug 'EdenEast/nightfox.nvim'
 Plug 'cocopon/iceberg.vim'
+Plug 'dracula/vim'
 
 call plug#end()
 
@@ -148,13 +149,32 @@ filetype plugin indent on " ファイル形式毎のプラグインとインデ�
 syntax enable " シンタックス有効化
 
 set background=dark
-colorscheme nightfox
+
+let g:tokyonight_style = "night"
+let g:tokyonight_italic_functions = 1
+let g:tokyonight_sidebars = ["qf", "vista_kind", "terminal", "packer"]
+colorscheme dracula
 
 "
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
+nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+nnoremap <silent> gd    <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> ga    <cmd>lua vim.lsp.buf.code_action()<CR>
+
+" Goto previous/next diagnostic warning/error
+nnoremap <silent> g[ <cmd>lua vim.diagnostic.goto_prev()<CR>
+nnoremap <silent> g] <cmd>lua vim.diagnostic.goto_next()<CR>
 
 " 次に文字が出てくるまでジャンプ
 map <C-j> <Plug>(edgemotion-j)
@@ -163,6 +183,13 @@ map <C-k> <Plug>(edgemotion-k)
 augroup RustCommands
     autocmd!
     autocmd FileType rust nnoremap <silent><leader>oc <cmd>RustOpenCargo<CR>
+    autocmd FileType rust nnoremap <silent><leader>k <cmd>RustMoveItemUp<CR>
+    autocmd FileType rust nnoremap <silent><leader>j <cmd>RustMoveItemDown<CR>
+    autocmd FileType rust nnoremap <silent><leader>vg <cmd>RustViewCrateGraph<CR>
+    autocmd FileType rust nnoremap <silent><leader>run <cmd>RustRunnables<CR>
+    autocmd FileType rust nnoremap <silent><leader>mac <cmd>RustExpandMacro<CR>
+    autocmd FileType rust nnoremap <silent><leader>up <cmd>RustParentModule<CR>
+    autocmd FileType rust nnoremap <silent><leader>join <cmd>RustJoinLines<CR>
 augroup END
 
 augroup TomlCommands
@@ -252,25 +279,26 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 -- The following example advertise capabilities to `clangd`.
-require'lspconfig'.clangd.setup {
-  capabilities = capabilities,
-}
+--require'lspconfig'.clangd.setup {
+--  capabilities = capabilities,
+--}
 
-local on_attach = function(client, bufnr)
-    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-    local opts = { noremap = true, silent = true }
-
-    buf_set_keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-    buf_set_keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-    buf_set_keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-    buf_set_keymap("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-end
-require('nvim-lsp-installer').on_server_ready(function(server)
-    local opts = {}
-    opts.on_attach = on_attach
-
-    server:setup(opts)
-end)
+--local on_attach = function(client, bufnr)
+--    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+--    local opts = { noremap = true, silent = true }
+--
+--    buf_set_keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
+--    buf_set_keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
+--    buf_set_keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
+--    buf_set_keymap("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
+--    buf_set_keymap("n", "ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+--end
+--require('nvim-lsp-installer').on_server_ready(function(server)
+--    local opts = {}
+--    opts.on_attach = on_attach
+--
+--    server:setup(opts)
+--end)
 require("telescope").load_extension("frecency")
 require("nvim-treesitter.configs").setup {
     yati = { enable = true },
@@ -421,12 +449,10 @@ require('rust-tools').setup {
 }
 require('crates').setup {}
 
-
 vim.api.nvim_set_keymap("n", "hw", "<Cmd>HopWord<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("x", "hw", "<Cmd>HopWord<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "gx", "<Cmd>NeoTreeRevealToggle<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "G,", "<Cmd>NeoTreeFloatToggle git_status<CR>", { noremap = true, silent = true })
-
 vim.api.nvim_set_keymap("n", "git", "<Cmd>Neogit<CR>", { noremap = true, silent = true })
 
 EOF

@@ -56,7 +56,6 @@ if [ -f '/Users/335g/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/335g
 # customize prompt by starship
 eval "$(starship init zsh)" for starship
 
-# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 
 # Neovim 起動速度計測
@@ -103,3 +102,14 @@ function nvim-profiler() {
   tail -n 1 $time_file | cut -d " " -f1 | tr -d "\n" && echo " [ms]\n"
   cat $time_file | sort -n -k 2 | tail -n 20
 }
+
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
+
+# bun completions
+[ -s "/Users/335g/.bun/_bun" ] && source "/Users/335g/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+. "$HOME/.cargo/env"
