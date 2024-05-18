@@ -88,9 +88,9 @@ return {
 		}
 
 		ins_left {
-			'filetype',
-			icon_only = true,
-			color = { fg = colors.gui.xline_edge_bg },
+		  'branch',
+		  icon = '',
+		  color = { fg = colors.gui.xline_edge_bg, bg = colors.gui.linenr_bg },
 		}
 
 		ins_left {
@@ -130,11 +130,6 @@ return {
 		  color = { fg = colors.gui.xline_edge_bg },
 		}
 
-		ins_right {
-		  'branch',
-		  icon = '',
-		  color = { fg = colors.gui.xline_edge_bg },
-		}
 
 		ins_right {
 			'encoding',
