@@ -1,5 +1,4 @@
 
-
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.uv.fs_stat(lazypath) then
   vim.fn.system({
@@ -23,7 +22,14 @@ local plugins = {
 	require('plugins/colorscheme/tokyonight'),
 
 	-- statusline
-	require('plugins/statusline/lualine'),	
+	require('plugins/statusline/lualine'),
+
+	-- completion
+	require('plugins/completion/nvim-cmp'),
+
+	-- lsp
+	require('plugins/lsp/lspconfig'),
+	require('plugins/lsp/lspsaga'),
 	
 }
 require("lazy").setup(plugins)
