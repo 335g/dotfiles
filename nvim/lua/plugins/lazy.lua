@@ -27,6 +27,9 @@ local plugins = {
 	-- snippet
 	require('plugins/snippet/luasnip'),
 
+	-- formatter
+	require('plugins/formatter/conform'),
+
 	-- completion
 	require('plugins/completion/nvim-cmp'),
 	require('plugins/completion/nvim-autopairs'),
