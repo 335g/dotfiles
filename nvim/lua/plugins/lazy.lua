@@ -21,8 +21,9 @@ local plugins = {
 	require('plugins/colorscheme/ayu'),
 	require('plugins/colorscheme/tokyonight'),
 
-	-- statusline
-	require('plugins/statusline/lualine'),
+	-- statusline/bufferline
+	require('plugins/line/lualine'),
+	require('plugins/line/bufferline'),
 
 	-- snippet
 	require('plugins/snippet/luasnip'),
