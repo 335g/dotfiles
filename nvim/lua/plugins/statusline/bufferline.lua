@@ -5,6 +5,11 @@ return {
   opts = {
     options = {
       diagnostics = "nvim_lsp",
+      buffer_close_icon = "x",
+      mode = "tabs",
+      hover = {
+        enabled = true,
+      },
     },
   },
   keys = {

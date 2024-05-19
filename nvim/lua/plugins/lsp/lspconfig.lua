@@ -1,11 +1,11 @@
 return {
-	"neovim/nvim-lspconfig",
-	dependencies = {
-		"hrsh7th/cmp-nvim-lsp",
-		"b0o/schemastore.nvim",
-	},
-	config = function()
-		local capabilities = require("cmp_nvim_lsp").default_capabilities()
+  "neovim/nvim-lspconfig",
+  dependencies = {
+    "hrsh7th/cmp-nvim-lsp",
+    "b0o/schemastore.nvim",
+  },
+  config = function()
+    local capabilities = require("cmp_nvim_lsp").default_capabilities()
     capabilities.offsetEncoding = { "utf-16" }
     capabilities.textDocument.completion.completionItem = {
       documentationFormat = {
@@ -31,7 +31,7 @@ return {
     }
     local lspconfig = require("lspconfig")
     lspconfig.cmake.setup({ capabilities = capabilities })
-    lspconfig.pylsp.setup({ capabilities = capabilities })
+    lspconfig.ruff_lsp.setup({ capabilities = capabilities })
     lspconfig.gopls.setup({ capabilities = capabilities })
     lspconfig.svelte.setup({ capabilities = capabilities })
     lspconfig.html.setup({ capabilities = capabilities })
@@ -125,5 +125,5 @@ return {
         })
       end,
     })
-	end,
+  end,
 }
