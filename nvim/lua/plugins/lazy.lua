@@ -43,6 +43,9 @@ local plugins = {
   require("plugins/lsp/lspsaga"),
   require("plugins/lsp/mason"),
 
+  -- utility
+  require("plugins/utility/toggleterm"),
+
   -- others
   require("plugins/others/tiny-devicons-auto-colors"),
 }
