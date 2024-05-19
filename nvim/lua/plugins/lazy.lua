@@ -24,8 +24,12 @@ local plugins = {
 	-- statusline
 	require('plugins/statusline/lualine'),
 
+	-- snippet
+	require('plugins/snippet/luasnip'),
+
 	-- completion
 	require('plugins/completion/nvim-cmp'),
+	require('plugins/completion/nvim-autopairs'),
 
 	-- lsp
 	require('plugins/lsp/lspconfig'),
