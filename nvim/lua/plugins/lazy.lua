@@ -37,6 +37,7 @@ local plugins = {
   require("plugins/completion/nvim-cmp"),
   require("plugins/completion/nvim-autopairs"),
   require("plugins/completion/comment"),
+  require("plugins/completion/copilot"),
 
   -- lsp
   require("plugins/lsp/lspconfig"),
@@ -49,5 +50,6 @@ local plugins = {
   -- others
   require("plugins/others/tiny-devicons-auto-colors"),
   require("plugins/others/nvim-treesitter"),
+  require("plugins/others/alpha-nvim"),
 }
 require("lazy").setup(plugins)

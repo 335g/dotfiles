@@ -1,4 +1,4 @@
 require("settings.options")
-require("plugins.lazy")
 require("settings.keymaps")
+require("plugins.lazy")
 vim.cmd.colorscheme("iceberg")
