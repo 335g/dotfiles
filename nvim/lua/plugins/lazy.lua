@@ -48,5 +48,6 @@ local plugins = {
 
   -- others
   require("plugins/others/tiny-devicons-auto-colors"),
+  require("plugins/others/nvim-treesitter"),
 }
 require("lazy").setup(plugins)
