@@ -22,6 +22,7 @@ local plugins = {
 
   -- finder
   require("plugins/finder/telescope"),
+  require("plugins/finder/neo-tree"),
 
   -- statusline
   require("plugins/statusline/lualine"),
@@ -51,5 +52,6 @@ local plugins = {
   require("plugins/others/tiny-devicons-auto-colors"),
   require("plugins/others/nvim-treesitter"),
   require("plugins/others/alpha-nvim"),
+  require("plugins/others/noice"),
 }
 require("lazy").setup(plugins)
