@@ -8,7 +8,7 @@ return {
     "3rd/image.nvim",
   },
   keys = {
-    { "<leader>nt", "<cmd>Neotree reveal toggle position=float<CR>", desc = "Neotree toggle" },
+    -- { "<Leader>nt", "<cmd>Neotree reveal toggle position=left<CR>", desc = "Neotree toggle" },
   },
   opts = {
     window = {
@@ -21,10 +21,10 @@ return {
       },
       mappings = {
         ["e"] = function()
-          vim.api.nvim_exec("Neotree source=filesystem position=float", true)
+          vim.api.nvim_exec("Neotree source=filesystem position=left", true)
         end,
         ["g"] = function()
-          vim.api.nvim_exec("Neotree source=git_status position=float", true)
+          vim.api.nvim_exec("Neotree source=git_status position=left", true)
         end,
       },
     },

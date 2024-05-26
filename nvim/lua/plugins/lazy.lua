@@ -22,7 +22,8 @@ local plugins = {
 
   -- finder
   require("plugins/finder/telescope"),
-  require("plugins/finder/neo-tree"),
+  -- require("plugins/finder/neo-tree"),
+  require("plugins/finder/nvim-tree"),
 
   -- statusline
   require("plugins/statusline/lualine"),
