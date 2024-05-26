@@ -5,12 +5,15 @@ vim.cmd("filetype plugin indent on")
 --
 vim.g.mapleader = " "
 
+vim.opt.termguicolors = true
+
 -- opt
 vim.opt.incsearch = true
 
 -- 行番号
-vim.opt.number = true
+vim.opt.number = true -- 行番号
 
+vim.opt.expandtab = true
 vim.opt.shiftwidth = 2
 vim.opt.showtabline = 1
 vim.opt.softtabstop = 2
@@ -48,3 +51,5 @@ vim.opt.cursorline = true
 
 -- 検索結果ハイライト
 vim.opt.hlsearch = true
+
+vim.opt.guifont = "Hack Nerd Font" -- フォント
