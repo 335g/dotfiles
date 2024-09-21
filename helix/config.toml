@@ -1,0 +1,16 @@
+theme = "ayu_dark"
+
+[editor]
+true-color = true
+color-modes = true
+auto-completion = true
+
+[editor.lsp]
+display-messages = true
+display-inlay-hints = true
+
+[editor.cursor-shape]
+insert = "bar"
+
+[editor.inline-diagnostics]
+cursor-line = "warning"

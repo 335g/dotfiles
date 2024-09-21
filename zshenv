@@ -10,3 +10,5 @@ export PATH=$HOME/.cargo/bin:$PATH
 export PATH=$HOME/.nodebrew/current/bin:$PATH
 export PATH=$HOME/.rye/shims:$PATH
 export PATH=$HOME/.deno/bin:$PATH
+
+export HELIX_RUNTIME=~/dev/other/helix/runtime
