@@ -40,7 +40,7 @@ zshaddhistory() {
 #alias ll='ls -l'
 #alias lal='ls -al'
 #alias where='command -v'
-alias e='exa'
+alias e='eza'
 alias ctags="`brew --prefix`/bin/ctags"
 
 ####################################################
