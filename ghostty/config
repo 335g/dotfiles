@@ -1,0 +1,7 @@
+theme = iceberg-dark
+cursor-style = block
+window-padding-x = 10
+window-padding-y = 5
+window-padding-balance = true
+macos-titlebar-style = hidden
+mouse-hide-while-typing = true
