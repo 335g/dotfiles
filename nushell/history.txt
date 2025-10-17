@@ -1,0 +1,380 @@
+exit
+ps
+ps aux
+^ps aux
+ps
+ps | where status == Running
+ls
+ls | sort-by size | reverse | first | get name | cp $in ~
+ls | sort-by size | reverse | first | get name
+ls | sort-by size | reverse |<\n>get name
+help ls
+ls -f
+/Users/335g/Applications/
+ls
+cd ../
+cd
+help commands | explore
+cd
+ls **/*.md
+ls **/*.lock
+e -al
+alias e = aza
+e -al
+exit
+alias e = eza
+e -al
+pwd
+dev/
+e -al
+mkdir tmp
+tmp/
+hx a.yaml
+open a.yaml
+open a.yaml | get dependencies
+open a.yaml | get dependencies.hoge_sdk
+hx a.json
+open a.json
+hx a.json
+open a.json
+mv a.json a.jsonl
+open a.jsonl
+hx a.json
+hx a.jsonl
+open a.jsonl
+mv a.jsonl a.json
+open a.json
+open a.json | where data.value > 15
+oepn a.json | get data.amount
+open a.json | get data.amount
+open a.json | get data.amount | math sum
+"str" | describe
+123 | describer
+123 | describe
+3.12min | describe
+$"6 x 7 = (6*7)"
+$"6 x 7 = (6 * 7)"
+print hello
+[foo, bar, baz]
+[foo, bar, baz] | describe
+"red,green,blue" | split row ","
+"red,green,blue" | split
+"red,green,blue"
+"red,green,blue" | split row ","
+"red,green,blue" | split column ","
+"hello world" | str contains "o wo"
+"hello world" | str contains "o"
+"hello world" | str contains "a"
+'APL' =~ '^\w{0,3}$'
+'FORT' =~ '^\w{0,3}$'
+'FORTRAN' =~ '^\w{0,3}$'
+$'(ansi purple_bold)This text is a bold purple!(ansi reset)"<\n>'
+1..3
+1.. | take 10
+1..3..10
+0b[1 1010]
+0x[1F FF]
+0o[377]
+[sam fred george]
+[] | is-empty
+[sam fred george].1
+[].1
+[a b c d e f] | range 1..3
+[a b c d e f] | 1..3
+[a b c d e f] | slice 1..3
+let colors = [yellow green]
+let colors = ($colors | prepend red)
+let colors = ($colors | append purple)
+$colors
+let colors = [red green blue]
+'blue' in $colors
+blue in $colors
+$colors | any {str ends-with "e"}
+$colors
+$colors | any {str ends-with "d"}
+$colors | any {str ends-with "x"}
+let scores = [1 2 3]
+$scores | any { |it| $it > 7 }
+$scores | any { |it| $it < 7 }
+$scores | any { |it| $it == 0 }
+$scores | all { |it| $it > 2 }
+$scores | all { |it| $it > -1 }
+[1 [2 3] 4 [5 6]] | flatten
+[1 [2 3] 4 [5 6] abc]
+[1 [2 3] 4 [5 6] abc] | flatten
+[1 [2 3] 4 [5 6] abc] | flatten | describe
+[1 [2 3] 4 [5 6] 7] | flatten | describe
+[1 [2 3] [4 5 [6 7 [8]]]] | flatten
+[1 [2 3] [4 5 [6 7 [8]]]] | flatten | flatten
+[1 [2 3] [4 5 [6 7 [8]]]] | flatten | flatten | flatten
+let zones = [UTC CET Europe/Moscow Asia/Yekaterinburg]
+$zones | wrap 'Zone'
+$zones
+$zones | wrap 'Zone' | upsert Time { |it| (date now | date to-timezone $it.Zone }
+$zones | wrap 'Zone' | upsert Time { |it| (date now | date to-timezone $it.Zone) }
+$zones | wrap 'Zone' | upsert Time { |it| (date now | date to-timezone $it.Zone | format date '%Y.%m.%d %H:%M') }
+{name: sam rank: 10}
+e -a;l
+e -al
+cargo init
+e -al
+rm -rf .git
+rm -rf .gitignore
+rm -rf src
+e -al
+mv Cargo.toml a.toml
+open a.toml
+open a.toml | describe
+date now
+date now | date to-record
+date now
+date now | describe
+date now | into record
+date now | into record | $in.year
+date now | into record | $in.hour
+date now | into record | $in.minute
+let data = { name: alice, age: 50 }
+{ ...$data, hobby: cricket }
+ls
+[[column1, column2]; [Value1, Value2]]
+[[column1, column2]; [Value1, Value2], [Value3, Value4]]
+[[column1, column2]; [Value1, Value2], [Value3 Value4]]
+[[column1 column2]; [Value1 Value2] [Value3 Value4]]
+[{name: sam, rank: 10} {name: bob rank: 7}]
+[{name: sam, rank: 10} {name: bob rank: a}]
+[{name: sam, rank: 10} {name: bob rank: a}] | describe
+[{name: sam, rank: 10} {name: bob rank: 7}] | describe
+[{x: 12 y:5}] | describe
+[{x: 12 y:5}]
+[{x: 12 y:5} {x: 3 y: 10} {x: 8 z: 10}]
+[{x: 12 y:5} {x: 3 y: 10} {x: 8 z: 10}] | describe
+[{x: 12 y:5} {x: 3 y: 10} {x: 8 y: 10}]
+[{x: 12 y:5} {x: 3 y: 10} {x: 8 y: 10}] | describe
+[{x: 12 y:5} {x: 3 y: 10} {x: 8 y: 10}] | get x
+[{x: 12 y:5} {x: 3 y: 10} {x: 8 y: 10}] | get x | describe
+[{x: 12 y:5} {x: 3 y: 10} {x: 8 y: 10}] | get y
+[{x: 12 y:5} {x: 3 y: 10} {x: 8 y: 10}] | get 0
+[{x: 12 y:5} {x: 3 y: 10} {x: 8 y: 10}] | get 0 | describe
+[[column1 column2];]
+[[column1 column2];] | describe
+[[column1 column2]; []] | describe
+[[column1 column2]; [a b]] | describe
+[[column1 column2]; [a b]]
+[[column1 column2]; [a b]] | get 1
+[[column1 column2]; [a b]] | get 0
+[[langs releases]; [[Rust JS Python] 60]<\n>]
+[[langs releases]; [[Rust JS Python] 60]] 
+[[langs releases]; [[Rust JS Python] 60]] | describe
+[[langs releases]; [[Rust JS Python] 60]] | get 0
+[[langs releases]; [[Rust JS Python] 60]].0
+[[langs releases]; [[Rust JS Python] 60]] | get 0
+[[langs releases]; [[Rust JS Python] 60]] | get 0 | .langs
+[[langs releases]; [[Rust JS Python] 60]].0.langs
+[[langs releases]; [[Rust JS Python] 60]].0.langs.2
+[[x y]; [12 5] [4 7] [2 2]]
+[[x y]; [12 5] [4 7] [2 2]].x
+[[x y]; [12 5] [4 7] [2 2]].x.1
+ls 
+ls | select name size
+ls | sort-by size | select name size
+ls | sort-by size | select name size | reverse
+ls | sort-by size | first 5
+ls | sort-by name
+ls | sort-by name | select 2
+ls | get name
+ls | select name
+ls | select name | describe
+ls | get name | describe
+let first = [[a b]; [1 2]]
+$first
+let second = [[a b]; [3 4]]
+$first | append $sencond
+$first | append $second
+let first = [[a b]; [1 2]]
+let second = [[a b]; [3 4]]
+let second = [[c d]; [3 4]]
+$first | merge $second
+let second = [[c d]; [3 4] [5 6]]
+$first | merge $second
+$second | merge $first
+$second | merge $first | describe
+[[a b]; [1 2]] | merge [[a b]; [3 4]]
+let second = [[c d]; [3 4]]
+le third = [[e f]; [5 6]]
+let third = [[e f]; [5 6]]
+[$first $second $third]
+[$first $second $third] | reduce {|it, acc| $acc | merge $it}
+[[a b]; [1 2] [a b]; [3 4]]
+[[a b]; [1 2] [3 4]]
+[[a b]; [1 2] [3 4]] | update a 4
+[[a b]; [1 2] [3 4] [5 6]] | update a {|row index| if $index == 0 { $row.a } else {555}}
+[[a b]; [1 2] [3 4] [5 6]] | update a {|row, index| if $index == 0 { $row.a } else {555}}
+[[a b]; [1 2] [3 4] [5 6]] | update a {|row| if $row.a == 0 { $row.a + 1 } else {555}}
+[[a b]; [1 2] [3 4] [5 6]] | update a {|row| if $row.a == 1 { $row.a + 1 } else {555}}
+ls | move name --after size
+ls | rename filename filetype filesize date
+ls | rename filename filetype filesize
+mut x = 0
+$x = $x + 1
+$x
+$env.PWD
+$env.pwd
+pwd
+plugin list
+cargo install nu_plugin_gstat
+plugin list
+exit
+plugin list
+pwd
+dev/oss/
+ls
+git clone https://github.com/nushell/nu_scripts.git
+cd nu_scripts/
+cp custom-completions/git/git-completions.nu ~/dotfiles/nushell/
+hx ~/dotfiles/nushell/env.nu
+exit
+git status
+e -al
+alias e = eza
+e -al
+pwd
+ls
+cd dev/oss/
+ls
+hx ~/dotfiles/nushell/env.nu
+exit
+hx ~/dotfiles/nushell/env.nu
+exit
+plugin list
+hx ~/dotfiles/nushell/env.nu
+ext
+exit
+plugin list
+hx ~/dotfiles/nushell/env.nu
+exit
+plugin list
+hx ~/dotfiles/nushell/config.nu
+hx --version
+where hx
+exit
+cd ~/dotfiles/nushell/
+hx
+$nu.default-config-dir
+mkdir plugins
+e -al
+alias e = eza
+e -al
+mv git-completions.nu plugins/
+exit
+plugin list
+~/dotfiles/nushell/
+touch plugins.nu
+hx config.nu
+help config.nu
+help
+hx config.nu
+help config nu
+hx config.nu
+exit
+plugin list
+e -al
+alias e = eza
+e -al
+rm plugins.nu
+e -TL 2
+hx config.nu
+exit
+plugin list
+use ~/.config/nushell/plugins/git-completions.nu *
+exit
+e -al
+alias e = eca
+alias e = eza
+e
+plugin list
+plugin add ~/.cargo/bin/nu_plugin_gstat
+plugin use gstat
+plugin list
+exit
+plugin list
+e -al
+alias e = eza
+e -al
+mv plugins/git-completions.nu .
+e -al
+rm -rf plugins/
+hx env.nu
+exit
+eza --icons
+eza --icons --all
+eza --icons --all --tree
+hx env.nu
+hx git-completions.nu
+e -al
+eza -al
+hx alias.nu
+hx env.nu
+exit
+e -al
+eza -al
+hx env.nu
+$nu.default-config-dir
+$nu.default-config-dir | path join "a.csv"
+$nu.default-config-dir | path join a.csv
+hx config.nu
+hx env.nu
+exit
+hx alias.nu
+exit
+e -al
+hx env.nu
+mkdir scripts
+mv alias.nu scripts/
+mv git-completions.nu scripts/
+hx env.nu
+exit
+e -al
+exit
+plugin list
+cargo install nu_plugin_polars
+open raftkvs-6000.jsonl
+open --raw raftkvs-6000.jsonl
+open --raw raftkvs-6000.jsonl | from json -o
+exit
+jlot req GetServerState | jlot call :6000
+jlot req GetServerState | jlot call :6000 | from json
+jlot req Apply '{"input":{"Put":{"key":"foo","value":123}},"kind":"Command"}' | jlot call :6000 | from json
+jlot req Apply '{"input":{"Get":{"key":"foo"}},"kind":"Command"}' | jlot call :6000 | from json
+jlot req Apply '{"input":{"Get":{"key":"foo"}},"kind":"Command"}' | jlot call :7000 | from json
+jlot req Apply '{"input":{"Get":{"key":"foo"}},"kind":"Command"}' | jlot call :7800 | from json
+jlot req Apply '{"input":{"Get":{"key":"foo"}},"kind":"Command"}' | jlot call :8000 | from json
+jlot req Apply '{"input":{"Get":{"key":"foo"}},"kind":"Command"}' | jlot call :6000 | from json
+jlot req Apply '{"input":{"Get":{"key":"foo"}},"kind":"Command"}' | jlot call :6700 | from json
+jlot req Apply '{"input":{"Get":{"key":"foo"}},"kind":"Command"}' | jlot call :7000 | from json
+jlot req Apply '{"input":{"Get":{"key":"foo"}},"kind":"Command"}' | jlot call :8000 | from json
+hx src/main.rs
+ls
+ls | where size > 1kb
+date now
+sys
+sys cpu
+sys host
+sys disks
+exit
+exit
+starship init nu | save ~/.cache/starship/init.nu
+ls
+cd starship/
+ls
+echo "source ~/.cache/starship/init.nu¥n" | save --append ($nu.config-path)
+cd
+cd dotfiles/nushell/
+e -al
+hx config.nu
+exit
+config
+e -al
+cd
+cd dotfiles/nushell/
+open a.csv
+exit

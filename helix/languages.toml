@@ -1,17 +1,49 @@
 
 [[language]]
-name = "python"
-language-servers = ["ruff"]
+name = "rust"
 # auto-format = true
-# formatter = { command = "ruff", args = ["format"] }
+
+[[language]]
+name = "css"
+language-servers = ["css-language-server"]
+
+[[language]]
+name = "python"
+language-servers = ["ty", "ruff"]
+auto-format = true
+
+[[language]]
+name = "typescript"
+roots = ["deno.json", "deno.jsonc", "package.json"]
+auto-format = true
+language-servers = ["deno-lsp"]
+
+[language-server.css-language-server]
+command = "/Users/335g/dev/sandbox/rust/css-language-server/target/debug/css-language-server"
+args = ["--env", "/Users/335g/dev/sandbox/rust/css-language-server/.env"]
 
 [language-server.ruff]
 command = "ruff"
 args = ["server"]
 
-[[language]]
-name = "rust"
+[language-server.ty]
+command = "ty"
+args = ["server"]
 
 [language-server.rust-analyzer]
 config = { checkOnSave = { command = "clippy" }, cargo = { allFeatures = true }}
 
+[language-server.deno-lsp]
+command = "deno"
+args = ["lsp"]
+
+[language-server.deno-lsp.config.deno]
+enable = true
+unstable = true
+suggest.imports.hosts = { "https://deno.land" = true }
+inlayHints.parameterNames.enabled = "all"
+inlayHints.parameterTypes.enabled = true
+inlayHints.variableTypes.enabled = true
+inlayHints.propertyDeclarationTypes.enabled  = true
+inlayHints.functionLikeReturnTypes.enabled = true
+inlayHints.enumMemberValues.enabled = true

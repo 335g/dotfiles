@@ -4,13 +4,21 @@ theme = "ayu_dark"
 true-color = true
 color-modes = true
 auto-completion = true
+end-of-line-diagnostics = "hint"
+
+[editor.soft-wrap]
+enable = true
 
 [editor.lsp]
 display-messages = true
 display-inlay-hints = true
+display-progress-messages = true
 
 [editor.cursor-shape]
 insert = "bar"
 
+[editor.indent-guides]
+render = true
+
 [editor.inline-diagnostics]
-cursor-line = "warning"
+cursor-line = "error"

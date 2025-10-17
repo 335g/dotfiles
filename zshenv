@@ -11,4 +11,5 @@ export PATH=$HOME/.nodebrew/current/bin:$PATH
 export PATH=$HOME/.rye/shims:$PATH
 export PATH=$HOME/.deno/bin:$PATH
 
-export HELIX_RUNTIME=~/dev/other/helix/runtime
+export HELIX_RUNTIME=~/dev/oss/helix/runtime
+export XDG_CONFIG_HOME=~/.config

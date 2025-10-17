@@ -107,9 +107,16 @@ export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
 
 # bun completions
-[ -s "/Users/335g/.bun/_bun" ] && source "/Users/335g/.bun/_bun"
+# [ -s "/Users/335g/.bun/_bun" ] && source "/Users/335g/.bun/_bun"
 
 # bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-. "$HOME/.cargo/env"
+# export BUN_INSTALL="$HOME/.bun"
+# export PATH="$BUN_INSTALL/bin:$PATH"
+# . "$HOME/.cargo/env"
+# . "/Users/335g/.deno/env"
+
+# moonbit
+export PATH="$HOME/.moon/bin:$PATH"
+
+# mise
+eval "$(mise activate zsh)"
